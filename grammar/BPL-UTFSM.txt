@@ -1,0 +1,81 @@
+PROGRAM -> DECLARATION_LIST
+
+DECLARATION_LIST -> DECLARATION_LIST DECLARATION | DECLARATION
+
+DECLARATION -> VAR_DEC | FUN_DEC | FUN_DEF
+
+VAR_DEC -> TYPE_SPECIFIER <id> ;
+	 | TYPE_SPECIFIER *<id> ;
+	 | TYPE_SPECIFIER <id>[ <num> ] ;
+
+TYPE_SPECIFIER -> int | void | string 
+
+FUN_DEF -> TYPE_SPECIFIER <id> ( PARAMS ) COMPOUND_STMT
+
+FUN_DEC -> TYPE_SPECIFIER <id> ( PARAMS ) ;
+
+PARAMS -> void | PARAM_LIST
+
+PARAM_LIST -> PARAM_LIST , PARAM | PARAM
+
+PARAM -> TYPE_SPECIFIER <id>
+       | TYPE_SPECIFIER *<id>
+       | TYPE_SPECIFIER <id>[ ]
+
+COMPOUND_STMT -> { LOCAL_DECS STATEMENT_LIST }
+
+LOCAL_DECS -> LOCAL_DECS VAR_DEC | <empty>
+
+STATEMENT_LIST -> STATEMENT_LIST STATEMENT | <empty>
+
+STATEMENT -> EXPRESSION_STMT
+	   | COMPOUND_STMT
+	   | IF_STMT
+	   | WHILE_STMT
+	   | RETURN_STMT
+	   | WRITE_STMT
+
+EXPRESSION_STMT -> EXPRESSION ; | ;
+
+IF_STMT -> if ( EXPRESSION ) STATEMENT
+	 | if ( EXPRESSION ) STATEMENT else STATEMENT
+
+WHILE_STMT -> while ( EXPRESSION ) statement
+
+RETURN_STMT -> return ; | return EXPRESSION ;
+
+WRITE_STMT -> write ( EXRESSION ) ; | writeln ( ) ;
+
+EXPRESSION -> VAR = EXPRESSION | COMP_EXP
+
+VAR -> <id> | <id> [ EXPRESSION ] | *<id>
+
+COMP_EXP -> E RELOP E | E
+
+RELOP -> <= | < | == | != | > | >=
+
+E -> E ADDOP T | T
+
+ADDOP -> + | -
+
+T -> T MULOP F | F
+
+MULOP -> * | / | %
+
+F -> -F | Factor
+
+Factor -> ( EXPRESSION )
+	| FUN_CALL
+	| read ( )
+	| <id>
+	| <id> [ EXPRESSION ]
+	| & <id>
+	| & <id> [ EXPRESSION ]
+	| <num>
+	| <string>
+
+FUN_CALL -> <id> ( ARGS )
+
+ARGS -> ARG_LIST | <empty>
+
+ARG_LIST -> ARG_LIST , EXPRESSION | EXPRESSION
